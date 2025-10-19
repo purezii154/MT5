@@ -72,7 +72,8 @@ class CryptoStrategyBot:
 
     def _connect(self):
         """เมธอดสำหรับเชื่อมต่อกับ MT5"""
-        if mt5.initialize(path=self.path, login=self.login, server=self.server, password=self.password):
+# บรรทัดใหม่:
+        if mt5.initialize():            
             print(f"[{self.symbol}] เชื่อมต่อ MT5 สำเร็จ")
             self.is_connected = True
         else:
@@ -187,7 +188,7 @@ class CryptoStrategyBot:
             print(f"[{self.symbol}] ไม่สามารถเริ่มทำงานได้: การเชื่อมต่อล้มเหลว")
             return
 
-        print(f"[{self.symbol}] Bot เริ่มทำงาน... Timeframe: {self.timeframe.name}, MA: {self.ma_period}, RSI: {self.rsi_period}")
+        print(f"[{self.symbol}] Bot เริ่มทำงาน... Timeframe: {self.timeframe}, MA: {self.ma_period}, RSI: {self.rsi_period}")
         while True:
             try:
                 # 1. ตรวจสอบสัญญาณ
@@ -212,9 +213,9 @@ class CryptoStrategyBot:
 if __name__ == "__main__":
     # --- ตั้งค่า ---
     try:
-        os.chdir("C:/Users/onyou/Downloads/grid/")
+        #os.chdir("C:/Users/onyou/Downloads/grid/")
         key = open("xmkey.txt", "r").read().split()
-        path = r"C:\Program Files\XM Global MT5\terminal64.exe"
+        path = r"C:\Program Files\MetaTrader 5\terminal64.exe"
 
         # --- สร้าง Bot สำหรับ BTCUSD ---
         btcusd_bot = CryptoStrategyBot(
@@ -222,7 +223,7 @@ if __name__ == "__main__":
             login=int(key[0]),
             server=key[1],
             password=key[2],
-            symbol="BTCUSD",
+            symbol="BTC",
             volume=0.01,
             timeframe=mt5.TIMEFRAME_H1, # เทรดที่กราฟ 1 ชั่วโมง
             ma_period=50,
